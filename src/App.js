@@ -1,10 +1,37 @@
+import React, { useState } from 'react';
 
-import './App.css';
+import Form from './Components/Form'; 
 
 function App() {
+  const [members, setMembers] = useState([]);
+  const [values, setValues] = useState({ name: '', email: '', role: '' });
+
+  const onSubmit = () => {
+    setMembers([ values, ...members ]);
+    setValues({ name: '', email: '', role: '' });
+  }
+
+  const onChange = (name, value) => {
+    setValues({ ...values, [name]: value});
+  }
+
   return (
     <div className="App">
       <h1>Team Builder App</h1>
+      <Form 
+        values={values}
+        change={onChange}
+        submit={onSubmit}
+      />
+      {members.map((member, idx) => {
+        return (
+          <div key={idx}>
+            {`My name is ${member.name}.
+            My email is ${member.email}.
+            My role here is a ${member.role}.`}
+          </div>  
+        )
+      })}
     </div>
   );
 }
